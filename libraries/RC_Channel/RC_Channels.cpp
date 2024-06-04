@@ -72,8 +72,11 @@ uint8_t RC_Channels::get_radio_in(uint16_t *chans, const uint8_t num_channels)
 // update all the input channels
 bool RC_Channels::read_input(void)
 {
+    const uint32_t now = AP_HAL::millis();
+
     if (hal.rcin->new_input()) {
         _has_had_rc_receiver = true;
+        last_rc_receiver_update_ms = now;
     } else if (!has_new_overrides) {
         return false;
     }
@@ -81,6 +84,8 @@ bool RC_Channels::read_input(void)
     _has_ever_seen_rc_input = true;
 
     has_new_overrides = false;
+
+    last_update_ms = now;
 
     last_update_ms = AP_HAL::millis();
 
