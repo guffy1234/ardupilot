@@ -87,8 +87,6 @@ bool RC_Channels::read_input(void)
 
     last_update_ms = now;
 
-    last_update_ms = AP_HAL::millis();
-
     bool success = false;
     for (uint8_t i=0; i<NUM_RC_CHANNELS; i++) {
         success |= channel(i)->update();
